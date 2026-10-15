@@ -1,0 +1,12 @@
+{
+  "name": "Playbox — Games Hub",
+  "short_name": "Playbox",
+  "description": "A pocket arcade of small browser games.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0d0e11",
+  "theme_color": "#0d0e11",
+  "icons": [{ "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

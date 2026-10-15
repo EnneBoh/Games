@@ -1,0 +1,73 @@
+[
+  {
+    "id": "demo-tap",
+    "title": "Tap Targets",
+    "tagline": "30 seconds. Hit everything that glows.",
+    "description": "A tiny reflex game that proves the Playbox contract end to end: settings, haptics, pause/resume, saved scores and exit all go through the shared SDK.",
+    "howTo": ["Tap the glowing targets before their ring closes.", "Chain hits for a combo bonus; a miss resets it.", "Score as much as you can in 30 seconds."],
+    "tags": ["reflex", "arcade", "quick"],
+    "players": "1",
+    "accentColor": "#0f9d7a",
+    "icon": "🎯",
+    "cover": "linear-gradient(135deg,#5eead4 0%,#0f9d7a 55%,#064e3b 100%)",
+    "status": "ready",
+    "version": "1.0.0",
+    "featured": true
+  },
+  {
+    "id": "score-four",
+    "title": "Score Four",
+    "tagline": "Connect four, in three dimensions.",
+    "description": "Drop beads onto a 4×4 peg board and line up four in any direction — rows, columns, diagonals and through the layers. Pass-and-play on one device.",
+    "howTo": ["Take turns dropping a bead on any peg.", "Beads stack, so think in height as well as width.", "First to align four wins."],
+    "tags": ["strategy", "3D", "classic"],
+    "players": "2 local",
+    "accentColor": "#3b6cf6",
+    "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M5 20V8M12 20V4M19 20V8\"/><circle cx=\"5\" cy=\"6\" r=\"2\" fill=\"currentColor\"/><circle cx=\"12\" cy=\"2.5\" r=\"0\"/><circle cx=\"19\" cy=\"6\" r=\"2\" fill=\"currentColor\"/><path d=\"M3 20h18\"/></svg>",
+    "cover": "linear-gradient(135deg,#93b4ff 0%,#3b6cf6 55%,#1e2f8a 100%)",
+    "status": "soon",
+    "version": "0.0.0"
+  },
+  {
+    "id": "orbit-dash",
+    "title": "Orbit Dash",
+    "tagline": "Slingshot between planets without crashing.",
+    "description": "One-thumb arcade: time your release to hop between orbits and chase a high score.",
+    "howTo": [],
+    "tags": ["arcade", "one-thumb"],
+    "players": "1",
+    "accentColor": "#e0457b",
+    "icon": "🪐",
+    "cover": "linear-gradient(135deg,#ffa3c2 0%,#e0457b 55%,#7a1238 100%)",
+    "status": "soon",
+    "version": "0.0.0"
+  },
+  {
+    "id": "pixel-pairs",
+    "title": "Pixel Pairs",
+    "tagline": "A memory duel against a friend.",
+    "description": "Flip cards, find matching pairs, and out-remember your opponent on the same screen.",
+    "howTo": [],
+    "tags": ["memory", "party"],
+    "players": "2 local",
+    "accentColor": "#d97706",
+    "icon": "🃏",
+    "cover": "linear-gradient(135deg,#fde68a 0%,#f59e0b 55%,#92400e 100%)",
+    "status": "soon",
+    "version": "0.0.0"
+  },
+  {
+    "id": "stack-duel",
+    "title": "Stack Duel",
+    "tagline": "Race to build the tallest tower, online.",
+    "description": "Real-time tower building against players around the world.",
+    "howTo": [],
+    "tags": ["physics", "versus"],
+    "players": "2 online",
+    "accentColor": "#7c3aed",
+    "icon": "🧱",
+    "cover": "linear-gradient(135deg,#c4b5fd 0%,#7c3aed 55%,#3b0f8c 100%)",
+    "status": "soon",
+    "version": "0.0.0"
+  }
+]

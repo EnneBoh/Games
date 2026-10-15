@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Playbox — games hub</title>
+  <meta name="description" content="Playbox: a pocket arcade of small, fast browser games. Installable and playable offline.">
+  <meta name="theme-color" content="#f6f6f3" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d0e11" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=DM+Sans:opsz,wght@9..40,400..700&display=swap">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="modulepreload" href="assets/js/sdk.js">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to games</a>
+  <div class="net" id="net" role="status" hidden>You’re offline — cached games still work.</div>
+
+  <header class="wrap app-header" id="header">
+    <a class="brand" href="#/" aria-label="Playbox home">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="12" height="12" rx="4" fill="#7c6bff"/><rect x="18" y="2" width="12" height="12" rx="4" fill="#2fd4a0"/><rect x="2" y="18" width="12" height="12" rx="4" fill="#ff7a9c"/><circle cx="24" cy="24" r="6" fill="#ffc857"/></svg>
+      Playbox
+    </a>
+    <a class="icon-btn" href="#/settings" aria-label="Settings">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>
+    </a>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <div class="wrap skeleton" aria-hidden="true"><i></i><i></i><i></i></div>
+    <noscript><div class="wrap"><p>Playbox needs JavaScript to run.</p></div></noscript>
+  </main>
+
+  <dialog class="sheet" id="detail"></dialog>
+  <dialog class="sheet" id="settings"></dialog>
+
+  <div id="live" class="sr-only" aria-live="polite" role="status"></div>
+  <div id="toast" class="net" role="status" style="position:fixed;left:50%;bottom:calc(16px + var(--safe-b));translate:-50% 0;border-radius:999px;z-index:200" hidden></div>
+
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>

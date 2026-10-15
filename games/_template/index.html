@@ -1,0 +1,97 @@
+<!doctype html>
+<!--
+  PLAYBOX GAME TEMPLATE
+  Copy this folder to /games/<your-id>/, then add an entry to /games/games.json. See README.md next to this file.
+  Everything a game needs is here: canvas, DPR-aware resize, fixed-ish game loop, pause/resume, SDK hooks.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- user-scalable=no + viewport-fit=cover: no pinch/double-tap zoom, full-bleed on notched phones -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>New Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=DM+Sans:opsz,wght@9..40,400..700&display=swap">
+  <!-- Shared tokens (+ optional base components: .btn, .chip, …). Same relative depth as every game. -->
+  <link rel="stylesheet" href="../../assets/css/tokens.css">
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <style>
+    /* The hub passes ?accent=#rrggbb and the SDK sets --accent for you. */
+    body { background: color-mix(in oklab, var(--accent) 10%, var(--bg)); }
+    canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; /* we handle touch ourselves */ }
+    .hud { position: fixed; top: calc(72px + var(--safe-t)); left: 0; right: 0; text-align: center; pointer-events: none; font: 800 var(--fs-3)/1 var(--font-display); }
+  </style>
+</head>
+<body>
+  <canvas id="game" aria-label="Game area"></canvas>
+  <div class="hud" id="score">0</div>
+
+<script type="module">
+import * as sdk from '../../assets/js/sdk.js';
+
+const GAME_ID = 'my-game';            // ← must match the folder name and the id in games.json
+
+/* ---------- canvas & resize ---------- */
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+let W = 0, H = 0;                     // CSS pixels; draw in these units
+function resize() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  W = innerWidth; H = innerHeight;    // 100dvh-safe inside the hub iframe
+  canvas.width = W * dpr; canvas.height = H * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+new ResizeObserver(resize).observe(document.documentElement); // handles rotation + browser UI changes
+resize();
+
+/* ---------- state ---------- */
+const accent = () => getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+let score = 0;
+let ball = { x: W / 2, y: H / 2, vx: 220, vy: 160, r: 28 };
+
+/* ---------- update / render ---------- */
+function update(dt) {                 // dt in seconds, already clamped
+  ball.x += ball.vx * dt; ball.y += ball.vy * dt;
+  if (ball.x < ball.r || ball.x > W - ball.r) { ball.vx *= -1; sdk.haptic('select'); sdk.tone(300, 0.04); }
+  if (ball.y < ball.r || ball.y > H - ball.r) { ball.vy *= -1; sdk.haptic('select'); sdk.tone(300, 0.04); }
+  ball.x = Math.min(Math.max(ball.x, ball.r), W - ball.r);
+  ball.y = Math.min(Math.max(ball.y, ball.r), H - ball.r);
+}
+function render() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = accent();
+  ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2); ctx.fill();
+  document.getElementById('score').textContent = score;
+}
+
+/* ---------- input (pointer events cover touch, mouse and pen) ---------- */
+canvas.addEventListener('pointerdown', (e) => {
+  e.preventDefault();
+  if (Math.hypot(e.clientX - ball.x, e.clientY - ball.y) < ball.r * 1.5) {
+    score++; sdk.haptic('light'); sdk.tone(660, 0.06);
+    sdk.saveScore(GAME_ID, score);    // keeps the best only; the hub card shows it
+  }
+});
+
+/* ---------- loop with pause ---------- */
+let last = performance.now(), paused = false;
+function frame(now) {
+  requestAnimationFrame(frame);
+  const dt = Math.min((now - last) / 1000, 0.05); last = now;   // clamp so tab-switches don't teleport things
+  if (!paused) update(dt);
+  render();
+}
+requestAnimationFrame(frame);
+
+sdk.onPause(() => { paused = true; });                           // tab hidden OR hub pause overlay
+sdk.onResume(() => { paused = false; last = performance.now(); });
+
+// Other SDK calls you will use:
+//   sdk.getSettings()           → { sound, haptics, theme, reducedMotion }
+//   sdk.getBest(id)             → number | null
+//   sdk.save(id, obj) / sdk.load(id, fallback)
+//   sdk.fullscreen()            sdk.exit()
+</script>
+</body>
+</html>
