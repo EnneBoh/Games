@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>2048</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=DM+Sans:opsz,wght@9..40,400..700&display=swap">
+  <link rel="stylesheet" href="../../assets/css/tokens.css">
+  <link rel="stylesheet" href="game.css">
+  <link rel="modulepreload" href="../../assets/js/sdk.js">
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <button class="ibtn" id="back" aria-label="Back to hub"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <h1>2048</h1>
+      <div class="top__actions">
+        <button class="ibtn" id="undo" aria-label="Undo last move (Z)" disabled><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg></button>
+        <button class="ibtn" id="new" aria-label="New game (R)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button>
+      </div>
+    </header>
+
+    <section class="hud" aria-label="Scores">
+      <div class="pill"><small>Score</small><b id="score">0</b></div>
+      <div class="pill"><small>Best</small><b id="best">0</b></div>
+    </section>
+
+    <main class="stage">
+      <div class="board" id="board" role="grid" aria-label="2048 board" aria-rowcount="4" aria-colcount="4" tabindex="0">
+        <div class="cells" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="tiles" id="tiles" role="row"></div>
+      </div>
+    </main>
+
+    <p class="hint">Swipe or use arrow keys / WASD · Z undo · R new game</p>
+  </div>
+
+  <div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="ov-title" hidden></div>
+  <div class="toast" id="toast" hidden></div>
+  <div class="sr" id="live" role="status" aria-live="polite"></div>
+
+  <script type="module" src="game.js"></script>
+</body>
+</html>

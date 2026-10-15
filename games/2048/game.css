@@ -1,0 +1,113 @@
+/* 2048 — game-specific styles. Colours, radii, spacing and fonts come from the hub tokens. */
+:root {
+  --accent: #e8590c;                      /* fallback when opened outside the hub; the SDK overrides it */
+  --slide: 120ms;
+  --board: min(92vw, 62dvh, 520px);
+  --gap: calc(var(--board) * 0.028);
+  --cell: calc((var(--board) - var(--gap) * 5) / 4);
+}
+:root[data-motion="reduce"] { --slide: 0ms; }
+
+* { box-sizing: border-box; margin: 0; }
+[hidden] { display: none !important; }
+html, body { height: 100%; touch-action: none; overscroll-behavior: none; }
+body {
+  background: color-mix(in oklab, var(--accent) 8%, var(--bg)); color: var(--text);
+  font: 400 var(--fs-0)/1.4 var(--font-text); -webkit-font-smoothing: antialiased; -webkit-user-select: none; user-select: none;
+}
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: var(--r-sm); }
+
+.app {
+  height: 100dvh; max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--s-4);
+  padding: calc(var(--s-3) + var(--safe-t)) calc(var(--s-4) + var(--safe-r)) calc(var(--s-3) + var(--safe-b)) calc(var(--s-4) + var(--safe-l));
+}
+.top, .hud { width: var(--board); }
+.top { display: flex; align-items: center; justify-content: space-between; gap: var(--s-2); }
+.top h1 { font: 800 var(--fs-3)/1 var(--font-display); letter-spacing: -0.04em; color: var(--text); }
+.top__actions { display: flex; gap: var(--s-2); }
+
+.ibtn {
+  width: var(--tap); height: var(--tap); display: grid; place-items: center; border-radius: var(--r-pill); cursor: pointer;
+  background: var(--surface); color: var(--text); border: 1px solid var(--line); box-shadow: var(--shadow-1);
+  transition: transform var(--t-fast) var(--ease), opacity var(--t-fast);
+}
+.ibtn:active:not(:disabled) { transform: scale(0.92); }
+.ibtn:disabled { opacity: 0.4; cursor: default; }
+
+.hud { display: flex; gap: var(--s-3); }
+.pill {
+  position: relative; flex: 1; display: grid; padding: var(--s-2) var(--s-4); border-radius: var(--r-md);
+  background: var(--glass); backdrop-filter: blur(14px) saturate(1.3); -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  border: 1px solid var(--line); box-shadow: var(--shadow-1);
+}
+.pill small { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-2); }
+.pill b { font: 800 var(--fs-2)/1.15 var(--font-display); font-variant-numeric: tabular-nums; }
+.float { position: absolute; right: var(--s-4); top: 6px; font: 800 var(--fs-1)/1 var(--font-display); color: var(--accent-btn); pointer-events: none; animation: float 700ms var(--ease) forwards; }
+@keyframes float { to { transform: translateY(-36px); opacity: 0; } }
+
+/* Board */
+.board {
+  position: relative; width: var(--board); height: var(--board); border-radius: var(--r-lg);
+  background: color-mix(in oklab, var(--accent) 14%, var(--surface-2)); box-shadow: var(--shadow-2), inset 0 0 0 1px var(--line);
+}
+.board:focus-visible { outline-offset: 5px; border-radius: var(--r-lg); }
+.cells { position: absolute; inset: var(--gap); display: grid; grid: repeat(4, 1fr) / repeat(4, 1fr); gap: var(--gap); }
+.cells i { border-radius: var(--r-sm); background: color-mix(in oklab, var(--text) 7%, transparent); }
+.tiles { display: contents; }
+.tile {
+  position: absolute; left: 0; top: 0; width: var(--cell); height: var(--cell);
+  transform: translate(calc(var(--gap) + var(--c) * (var(--cell) + var(--gap))), calc(var(--gap) + var(--r) * (var(--cell) + var(--gap))));
+  transition: transform var(--slide) cubic-bezier(0.25, 0.8, 0.4, 1); will-change: transform;
+}
+/* Colour ramp: share of the accent grows with the tile exponent --t (2 → 0 … 2048 → 10). */
+.tile__in {
+  width: 100%; height: 100%; display: grid; place-items: center; border-radius: var(--r-sm);
+  font: 800 calc(var(--cell) * 0.46)/1 var(--font-display); font-variant-numeric: tabular-nums; letter-spacing: -0.03em;
+  background: color-mix(in oklab, var(--accent) calc(10% + var(--t) * 7%), var(--surface-2)); color: var(--text);
+}
+.tile[data-d="3"] .tile__in { font-size: calc(var(--cell) * 0.36); }
+.tile[data-d="4"] .tile__in { font-size: calc(var(--cell) * 0.3); }
+.tile[data-d="5"] .tile__in, .tile[data-d="6"] .tile__in { font-size: calc(var(--cell) * 0.23); }
+/* 128+: darker accent with white text (always AA) and a soft glow */
+.tile.hi .tile__in {
+  background: color-mix(in oklab, var(--accent) calc(70% - (var(--t) - 6) * 5%), #000); color: #fff;
+  box-shadow: 0 0 calc(var(--cell) * 0.3) color-mix(in oklab, var(--accent) 55%, transparent), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+.tile.new .tile__in { animation: spawn 160ms var(--ease) both; }
+.tile.merge .tile__in { animation: pop 160ms var(--ease); }
+@keyframes spawn { from { scale: 0; } }
+@keyframes pop { 50% { scale: 1.15; } }
+:root[data-motion="reduce"] .tile__in { animation: none !important; }
+.is-paused * { animation-play-state: paused !important; }
+
+.hint { color: var(--text-2); font-size: var(--fs-s); text-align: center; max-width: var(--board); }
+
+/* Overlays */
+.ov {
+  position: fixed; inset: 0; z-index: 10; display: grid; place-content: center; justify-items: center; gap: var(--s-4); text-align: center; padding: var(--s-5);
+  background: color-mix(in oklab, var(--bg) 60%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); animation: fade var(--t-med) both;
+}
+.ov h2 { font: 800 var(--fs-4)/1 var(--font-display); letter-spacing: -0.04em; }
+.ov p { color: var(--text-2); }
+.ov .big { font: 800 var(--fs-3)/1 var(--font-display); color: var(--text); }
+.ov .row { display: flex; flex-wrap: wrap; gap: var(--s-3); justify-content: center; }
+.badge { padding: 4px 14px; border-radius: var(--r-pill); background: var(--accent-btn); color: #fff; font-weight: 700; animation: pop 400ms var(--ease) 150ms both; }
+.btn {
+  min-height: 56px; padding: 0 var(--s-6); border-radius: var(--r-pill); font: 700 var(--fs-1) var(--font-text); cursor: pointer;
+  background: var(--surface); color: var(--text); border: 1px solid var(--line); box-shadow: var(--shadow-1); transition: transform var(--t-fast) var(--ease);
+}
+.btn:active { transform: scale(0.96); }
+.btn--primary { background: var(--accent-btn); color: #fff; border-color: transparent; }
+@keyframes fade { from { opacity: 0; } }
+
+.toast { position: fixed; left: 50%; bottom: calc(var(--s-5) + var(--safe-b)); translate: -50% 0; padding: var(--s-2) var(--s-4); border-radius: var(--r-pill); background: var(--text); color: var(--bg); font-weight: 600; font-size: var(--fs-s); animation: fade var(--t-med) both; z-index: 11; }
+
+/* Landscape phones: board on the right, controls on the left */
+@media (orientation: landscape) and (max-height: 620px) {
+  :root { --board: min(86dvh, 56vw, 520px); }
+  .app { display: grid; grid-template-columns: minmax(200px, 1fr) auto; grid-template-rows: auto auto 1fr; align-content: center; column-gap: var(--s-6); max-width: 960px; justify-items: stretch; }
+  .top, .hud, .hint { grid-column: 1; width: auto; max-width: none; }
+  .hint { align-self: start; }
+  .stage { grid-column: 2; grid-row: 1 / -1; align-self: center; }
+}

@@ -4,8 +4,16 @@
     "title": "Tap Targets",
     "tagline": "30 seconds. Hit everything that glows.",
     "description": "A tiny reflex game that proves the Playbox contract end to end: settings, haptics, pause/resume, saved scores and exit all go through the shared SDK.",
-    "howTo": ["Tap the glowing targets before their ring closes.", "Chain hits for a combo bonus; a miss resets it.", "Score as much as you can in 30 seconds."],
-    "tags": ["reflex", "arcade", "quick"],
+    "howTo": [
+      "Tap the glowing targets before their ring closes.",
+      "Chain hits for a combo bonus; a miss resets it.",
+      "Score as much as you can in 30 seconds."
+    ],
+    "tags": [
+      "reflex",
+      "arcade",
+      "quick"
+    ],
     "players": "1",
     "accentColor": "#0f9d7a",
     "icon": "🎯",
@@ -15,12 +23,43 @@
     "featured": true
   },
   {
+    "id": "2048",
+    "title": "2048",
+    "tagline": "Slide, merge, reach 2048.",
+    "description": "The classic number-merging puzzle. Swipe to slide every tile; equal tiles merge into their sum. Reach 2048, then keep going for a high score. Your game autosaves, so you can pick up where you left off.",
+    "howTo": [
+      "Swipe (or use arrow keys / WASD) to slide all tiles.",
+      "Two equal tiles that touch merge into one — once per move.",
+      "Reach 2048 to win; the game ends when no moves are left.",
+      "Z undoes your last move (one step)."
+    ],
+    "tags": [
+      "puzzle",
+      "numbers",
+      "classic"
+    ],
+    "players": "1",
+    "accentColor": "#e8590c",
+    "icon": "🔢",
+    "cover": "linear-gradient(135deg,#ffc9a8 0%,#e8590c 55%,#7c2d06 100%)",
+    "status": "ready",
+    "version": "1.0.0"
+  },
+  {
     "id": "score-four",
     "title": "Score Four",
     "tagline": "Connect four, in three dimensions.",
     "description": "Drop beads onto a 4×4 peg board and line up four in any direction — rows, columns, diagonals and through the layers. Pass-and-play on one device.",
-    "howTo": ["Take turns dropping a bead on any peg.", "Beads stack, so think in height as well as width.", "First to align four wins."],
-    "tags": ["strategy", "3D", "classic"],
+    "howTo": [
+      "Take turns dropping a bead on any peg.",
+      "Beads stack, so think in height as well as width.",
+      "First to align four wins."
+    ],
+    "tags": [
+      "strategy",
+      "3D",
+      "classic"
+    ],
     "players": "2 local",
     "accentColor": "#3b6cf6",
     "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M5 20V8M12 20V4M19 20V8\"/><circle cx=\"5\" cy=\"6\" r=\"2\" fill=\"currentColor\"/><circle cx=\"12\" cy=\"2.5\" r=\"0\"/><circle cx=\"19\" cy=\"6\" r=\"2\" fill=\"currentColor\"/><path d=\"M3 20h18\"/></svg>",
@@ -34,7 +73,10 @@
     "tagline": "Slingshot between planets without crashing.",
     "description": "One-thumb arcade: time your release to hop between orbits and chase a high score.",
     "howTo": [],
-    "tags": ["arcade", "one-thumb"],
+    "tags": [
+      "arcade",
+      "one-thumb"
+    ],
     "players": "1",
     "accentColor": "#e0457b",
     "icon": "🪐",
@@ -48,7 +90,10 @@
     "tagline": "A memory duel against a friend.",
     "description": "Flip cards, find matching pairs, and out-remember your opponent on the same screen.",
     "howTo": [],
-    "tags": ["memory", "party"],
+    "tags": [
+      "memory",
+      "party"
+    ],
     "players": "2 local",
     "accentColor": "#d97706",
     "icon": "🃏",
@@ -62,7 +107,10 @@
     "tagline": "Race to build the tallest tower, online.",
     "description": "Real-time tower building against players around the world.",
     "howTo": [],
-    "tags": ["physics", "versus"],
+    "tags": [
+      "physics",
+      "versus"
+    ],
     "players": "2 online",
     "accentColor": "#7c3aed",
     "icon": "🧱",
